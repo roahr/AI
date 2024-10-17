@@ -1,0 +1,68 @@
+body {
+    background-image: url('/static/images/bg.png'); 
+    background-size: cover;
+    background-attachment: fixed; 
+    color: #fff; 
+    font-family: Arial, sans-serif;
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 20px; 
+}
+
+h1, h2 {
+    color: #0a0909;
+    text-align: center;
+}
+
+#treeForm {
+    background: rgba(9, 41, 58, 0.7); 
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: background 0.3s ease; 
+    width: 100%; 
+    max-width: 600px; 
+    text-align: center;
+}
+
+#treeImageContainer {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    overflow: hidden; 
+    position: relative;
+    width: 80%; 
+    margin: 0 auto; 
+    max-height: 80vh; 
+    transition: width 0.25s, height 0.25s; 
+}
+
+#treeImage {
+    transition: transform 0.25s ease; 
+    max-width: 100%; 
+    cursor: pointer;
+}
+
+#controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF; 
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none; 
+}
