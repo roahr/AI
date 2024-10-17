@@ -7,7 +7,7 @@ This repo contains 12 different search algorithms, each designed to explore and 
 The graph is represented as a set of nodes and edges, where each node has a specific position (X, Y) and each edge has a weight (cost). The graph is bidirectional, meaning paths can be traversed in both directions between nodes.
 
 Here is a visual representation of the graph used:
-![Graph]("metaData\tree_visualization.png")
+![Graph](".\metaData\tree_visualization.png")
 
 ### **Metadata Used**
 
@@ -25,7 +25,7 @@ Here is a visual representation of the graph used:
 The British Museum Search performs an exhaustive, unstructured search. It explores all possible paths randomly without any specific direction or priority. This algorithm is generally inefficient but guarantees finding a solution if one exists.
 
 **Output**
-![Output]("Output\BMS.png")
+![Output](".\Output\BMS.png")
 
 ---
 
