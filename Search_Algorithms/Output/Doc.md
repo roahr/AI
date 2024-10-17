@@ -105,7 +105,7 @@ A* is an informed search algorithm that uses both the actual cost from the start
 AO* is used in graphs with multiple sub-goals. It evaluates and expands nodes by considering their direct neighbors and optimizes for an overall solution with minimal cost. It is ideal for hierarchical and decomposable problems.
 
 **Output**
-![Output]("AO_Star.png")
+![Output]("Search_Algorithms/Output/A_Star.png")
 
 ---
 
