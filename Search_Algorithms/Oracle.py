@@ -1,6 +1,6 @@
 import pandas as pd
 import networkx as nx
-from collections import deque
+import math
 
 # Load node positions and path details
 nodes_df = pd.read_csv('node_positions.csv')
@@ -16,37 +16,40 @@ for index, row in paths_df.iterrows():
     G.add_edge(row['Source Node'], row['Target Node'], weight=row['Weight'])
     G.add_edge(row['Target Node'], row['Source Node'], weight=row['Weight'])  
 
-def british_museum_search(graph, start_node, goal_node):
+# Heuristic generation (Euclidean distance)
+def generate_heuristic(node, goal):
+    node_pos = G.nodes[node]['pos']
+    goal_pos = G.nodes[goal]['pos']
+    return math.sqrt((node_pos[0] - goal_pos[0]) ** 2 + (node_pos[1] - goal_pos[1]) ** 2)
+
+def oracle_search(graph, start_node, goal_node):
     visited = set()
-    queue = deque([(start_node, [start_node], 0)]) 
+    current_node = start_node
     total_cost = 0
+    path = [start_node]
     output = []
-    found_path = None
 
     print("============================ OPERATIONS PERFORMED ============================")
-    while queue:
-        current_node, path, current_cost = queue.popleft()
-        if current_node not in visited:
-            visited.add(current_node)
+    while current_node != goal_node:
+        visited.add(current_node)
 
-            if current_node == goal_node:  
-                found_path = path
-                total_cost = current_cost
-                break
-
-            for neighbor in graph.neighbors(current_node):
-                edge_weight = graph[current_node][neighbor]['weight']
-                new_cost = current_cost + edge_weight
-                new_path = path + [neighbor]
-                queue.append((neighbor, new_path, new_cost))
-                output.append(f"Operation: ||{current_node}||---{edge_weight:.2f}--->||{neighbor}||")
-
-    
+        neighbors = [(neighbor, graph[current_node][neighbor]['weight']) for neighbor in graph.neighbors(current_node)]
+        if not neighbors:
+            break
         
-    if found_path:
+        best_neighbor = min(neighbors, key=lambda x: generate_heuristic(x[0], goal_node) + x[1])
+        best_weight = best_neighbor[1]
+        
+        path.append(best_neighbor[0])
+        total_cost += best_weight
+        output.append(f"Operation: ||{current_node}||---{best_weight:.2f}--->||{best_neighbor[0]}||")
+        
+        current_node = best_neighbor[0]
+
+    if current_node == goal_node:
         print("\n".join(output))
         print("====================================================================================")
-        print(f"\nPath Found: {' -> '.join(map(str, found_path))}")
+        print(f"\nPath Found: {' -> '.join(map(str, path))}")
         print("====================================================================================")
         print(f"Total Cost: {total_cost:.2f}")
         print("====================================================================================")
@@ -54,7 +57,6 @@ def british_museum_search(graph, start_node, goal_node):
         print(f"Goal Node ({goal_node}) not reached.")
         print("====================================================================================")
         
-
     visited_formatted = [int(node) for node in visited]
     print(f"All Visited Nodes: {visited_formatted}")
     print("====================================================================================")
@@ -62,4 +64,4 @@ def british_museum_search(graph, start_node, goal_node):
 
 start_node = 1  # Source
 goal_node = 5   # Goal
-visited_nodes = british_museum_search(G, start_node, goal_node)
+visited_nodes = oracle_search(G, start_node, goal_node)

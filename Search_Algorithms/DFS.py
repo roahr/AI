@@ -1,6 +1,5 @@
 import pandas as pd
 import networkx as nx
-from collections import deque
 
 # Load node positions and path details
 nodes_df = pd.read_csv('node_positions.csv')
@@ -16,16 +15,16 @@ for index, row in paths_df.iterrows():
     G.add_edge(row['Source Node'], row['Target Node'], weight=row['Weight'])
     G.add_edge(row['Target Node'], row['Source Node'], weight=row['Weight'])  
 
-def british_museum_search(graph, start_node, goal_node):
+def depth_first_search(graph, start_node, goal_node):
     visited = set()
-    queue = deque([(start_node, [start_node], 0)]) 
+    stack = [(start_node, [start_node], 0)]  
     total_cost = 0
     output = []
     found_path = None
 
     print("============================ OPERATIONS PERFORMED ============================")
-    while queue:
-        current_node, path, current_cost = queue.popleft()
+    while stack:
+        current_node, path, current_cost = stack.pop()
         if current_node not in visited:
             visited.add(current_node)
 
@@ -35,14 +34,14 @@ def british_museum_search(graph, start_node, goal_node):
                 break
 
             for neighbor in graph.neighbors(current_node):
-                edge_weight = graph[current_node][neighbor]['weight']
-                new_cost = current_cost + edge_weight
-                new_path = path + [neighbor]
-                queue.append((neighbor, new_path, new_cost))
-                output.append(f"Operation: ||{current_node}||---{edge_weight:.2f}--->||{neighbor}||")
+                if neighbor not in visited:  # Only consider unvisited neighbors
+                    edge_weight = graph[current_node][neighbor]['weight']
+                    new_cost = current_cost + edge_weight
+                    new_path = path + [neighbor]
+                    stack.append((neighbor, new_path, new_cost))
+                    output.append(f"Operation: ||{current_node}||---{edge_weight:.2f}--->||{neighbor}||")
 
     
-        
     if found_path:
         print("\n".join(output))
         print("====================================================================================")
@@ -54,7 +53,6 @@ def british_museum_search(graph, start_node, goal_node):
         print(f"Goal Node ({goal_node}) not reached.")
         print("====================================================================================")
         
-
     visited_formatted = [int(node) for node in visited]
     print(f"All Visited Nodes: {visited_formatted}")
     print("====================================================================================")
@@ -62,4 +60,4 @@ def british_museum_search(graph, start_node, goal_node):
 
 start_node = 1  # Source
 goal_node = 5   # Goal
-visited_nodes = british_museum_search(G, start_node, goal_node)
+visited_nodes = depth_first_search(G, start_node, goal_node)

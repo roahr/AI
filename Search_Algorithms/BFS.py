@@ -16,9 +16,9 @@ for index, row in paths_df.iterrows():
     G.add_edge(row['Source Node'], row['Target Node'], weight=row['Weight'])
     G.add_edge(row['Target Node'], row['Source Node'], weight=row['Weight'])  
 
-def british_museum_search(graph, start_node, goal_node):
+def breadth_first_search(graph, start_node, goal_node):
     visited = set()
-    queue = deque([(start_node, [start_node], 0)]) 
+    queue = deque([(start_node, [start_node], 0)])  # Queue stores node, path, and current cost
     total_cost = 0
     output = []
     found_path = None
@@ -35,14 +35,14 @@ def british_museum_search(graph, start_node, goal_node):
                 break
 
             for neighbor in graph.neighbors(current_node):
-                edge_weight = graph[current_node][neighbor]['weight']
-                new_cost = current_cost + edge_weight
-                new_path = path + [neighbor]
-                queue.append((neighbor, new_path, new_cost))
-                output.append(f"Operation: ||{current_node}||---{edge_weight:.2f}--->||{neighbor}||")
+                if neighbor not in visited:  # Only consider unvisited neighbors
+                    edge_weight = graph[current_node][neighbor]['weight']
+                    new_cost = current_cost + edge_weight
+                    new_path = path + [neighbor]
+                    queue.append((neighbor, new_path, new_cost))
+                    output.append(f"Operation: ||{current_node}||---{edge_weight:.2f}--->||{neighbor}||")
 
     
-        
     if found_path:
         print("\n".join(output))
         print("====================================================================================")
@@ -54,7 +54,6 @@ def british_museum_search(graph, start_node, goal_node):
         print(f"Goal Node ({goal_node}) not reached.")
         print("====================================================================================")
         
-
     visited_formatted = [int(node) for node in visited]
     print(f"All Visited Nodes: {visited_formatted}")
     print("====================================================================================")
@@ -62,4 +61,4 @@ def british_museum_search(graph, start_node, goal_node):
 
 start_node = 1  # Source
 goal_node = 5   # Goal
-visited_nodes = british_museum_search(G, start_node, goal_node)
+visited_nodes = breadth_first_search(G, start_node, goal_node)
