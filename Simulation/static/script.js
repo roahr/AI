@@ -1,4 +1,4 @@
-let scale = 1; 
+let scale = 1;
 
 document.getElementById('treeForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -30,10 +30,11 @@ document.getElementById('download_positions_csv').addEventListener('click', func
     });
 });
 
-document.getElementById('download_heuristics_csv').addEventListener('click', function(e) {
+// Updated section to download path details CSV
+document.getElementById('download_path_details_csv').addEventListener('click', function(e) {
     e.preventDefault();
     const formData = new FormData(document.getElementById('treeForm'));
-    fetch('/download_heuristics_csv', {
+    fetch('/download_path_details_csv', {
         method: 'POST',
         body: formData
     })
@@ -41,7 +42,7 @@ document.getElementById('download_heuristics_csv').addEventListener('click', fun
     .then(blob => {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'heuristics.csv';
+        link.download = 'path_details.csv'; // Updated filename
         link.click();
     });
 });
@@ -68,7 +69,6 @@ imageContainer.addEventListener('wheel', function(event) {
     }
     document.getElementById('treeImage').style.transform = `scale(${scale})`;
 });
-
 
 document.getElementById('download_image').addEventListener('click', function() {
     const canvas = document.createElement('canvas');
