@@ -6,6 +6,6 @@ This repository contains my code and implementations from the AI course at my co
 
 [Search Algorithms](Search_Algorithms/Doc.md)
 
-[Minimax and Alpha-Beta Pruning](Search_Algorithms/Output/A_Star.png)
+[Minimax and Alpha-Beta Pruning](Game_Adversarial/Doc.md)
 
 ---
