@@ -7,6 +7,8 @@ This repo contains 12 different search algorithms, each designed to explore and 
 The graph is represented as a set of nodes and edges, where each node has a specific position (X, Y) and each edge has a weight (cost). The graph is bidirectional, meaning paths can be traversed in both directions between nodes.
 
 Here is a visual representation of the graph used:
+
+
 ![Graph](metaData/tree_visualization.png)
 
 ### **Metadata Used**
